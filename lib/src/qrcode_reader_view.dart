@@ -53,8 +53,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
           hasCameraPermission = true;
         });
       } else {
-        Navigator.of(context)
-            .pop('无权访问摄像头/No permissions to access the camera');
+        Navigator.of(context).pop('Sem permissões para acessar a câmera');
       }
     });
   }
@@ -173,7 +172,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
               final qrScanSize = constraints.maxWidth * widget.scanBoxRatio;
               final mediaQuery = MediaQuery.of(context);
               if (constraints.maxHeight < qrScanSize * 1.5) {
-                print("建议高度与扫码区域高度比大于1.5");
+                print(
+                    "It is recommended that the height to scan area height ratio be greater than 1.5");
               }
               return Stack(
                 children: <Widget>[
@@ -214,7 +214,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                         style: TextStyle(color: Colors.white),
                         child: widget.helpWidget ??
                             Text(
-                              "请将二维码置于方框中 \n please place the code inside the frame",
+                              "Coloque o código dentro do quadro",
                               textAlign: TextAlign.center,
                             ),
                       ),

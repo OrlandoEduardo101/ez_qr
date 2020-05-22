@@ -13,10 +13,6 @@ class ScanView extends StatefulWidget {
 
 class _ScanViewState extends State<ScanView> {
   GlobalKey<QrcodeReaderViewState> _key = GlobalKey();
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
