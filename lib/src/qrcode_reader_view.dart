@@ -144,8 +144,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                 children: <Widget>[
                   Center(
                     child: SizedBox(
-                      width: constraints.maxWidth * 0.85,
-                      height: constraints.maxWidth * 0.85,
+                      width: constraints.maxWidth * 0.84,
+                      height: constraints.maxWidth * 0.84,
                       child: QrReaderView(
                         width: constraints.maxWidth,
                         height: constraints.maxHeight,
@@ -283,7 +283,7 @@ class QrScanBoxPainter extends CustomPainter {
         ..strokeWidth = 10,
     );
     final borderPaint = Paint()
-      ..color = cornerColor == null ? Colors.white : cornerColor
+      ..color = cornerColor ?? Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5;
     final path = new Path();

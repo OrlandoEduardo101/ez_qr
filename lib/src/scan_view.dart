@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:super_qr_reader/src/qrcode_reader_view.dart';
 
 class ScanView extends StatefulWidget {
-  ScanView({Key key}) : super(key: key);
+  final Color cornerColor;
+  ScanView({Key key, this.cornerColor}) : super(key: key);
 
   @override
   _ScanViewState createState() => new _ScanViewState();
@@ -24,7 +25,7 @@ class _ScanViewState extends State<ScanView> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),
-        cornerColor: Colors.white,
+        cornerColor: widget.cornerColor ?? Colors.white,
         // scanWidget: Center(
         //   child: Container(
         //     // padding: EdgeInsets.all(),

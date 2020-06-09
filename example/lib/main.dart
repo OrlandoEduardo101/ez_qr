@@ -45,7 +45,9 @@ class _HomePageState extends State<HomePage> {
                 String results = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ScanView(),
+                    builder: (context) => ScanView(
+                      cornerColor: Colors.blue,
+                    ),
                   ),
                 );
 
