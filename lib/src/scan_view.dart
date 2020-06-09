@@ -24,6 +24,18 @@ class _ScanViewState extends State<ScanView> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),
+        cornerColor: Colors.white,
+        // scanWidget: Center(
+        //   child: Container(
+        //     // padding: EdgeInsets.all(),
+        //     decoration: BoxDecoration(
+        //       // color: Colors.red,
+        //       border: Border.all(width: 5.0, color: Colors.green, style: BorderStyle.solid),
+        //     ),
+        //     width: MediaQuery.of(context).size.width * (0.9),
+        //     height: MediaQuery.of(context).size.width * (0.9),
+        //   ),
+        // ),
       ),
     );
   }
