@@ -44,7 +44,6 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
   void initState() {
     super.initState();
     openFlashlight = false;
-    _initAnimation();
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       bool isOk = await getPermissionOfCamera();
@@ -63,38 +62,13 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
     return status == PermissionStatus.granted;
   }
 
-  void _initAnimation() {
-    setState(() {
-      _animationController = AnimationController(
-          vsync: this, duration: Duration(milliseconds: 1000));
-    });
-    _animationController
-      ..addListener(_upState)
-      ..addStatusListener((state) {
-        if (state == AnimationStatus.completed) {
-          _timer = Timer(Duration(seconds: 1), () {
-            _animationController?.reverse(from: 1.0);
-          });
-        } else if (state == AnimationStatus.dismissed) {
-          _timer = Timer(Duration(seconds: 1), () {
-            _animationController?.forward(from: 0.0);
-          });
-        }
-      });
-    _animationController.forward(from: 0.0);
-  }
-
   void _clearAnimation() {
     _timer?.cancel();
     if (_animationController != null) {
       _animationController?.dispose();
       _animationController = null;
     }
-  }
-
-  void _upState() {
-    setState(() {});
-  }
+  }  
 
   void _onCreateController(QrReaderViewController controller) async {
     _controller = controller;
@@ -112,11 +86,9 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
   void startScan() {
     isScan = false;
     _controller.startCamera(_onQrBack);
-    _initAnimation();
   }
 
   void stopScan() {
-    _clearAnimation();
     _controller.stopCamera();
   }
 
@@ -214,7 +186,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                         style: TextStyle(color: Colors.white),
                         child: widget.helpWidget ??
                             Text(
-                              "Coloque o código dentro do quadro",
+                              "Coloque o código dentro do quadroooo",
                               textAlign: TextAlign.center,
                             ),
                       ),
