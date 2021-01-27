@@ -17,7 +17,10 @@ class QrcodeReaderView extends StatefulWidget {
   final Widget helpWidget;
   final Color cornerColor;
   final Widget scanWidget;
-  final Size size;
+  final Size screenCamSize;
+  final Size positionCam;
+  final Size closePositionButton;
+  final Widget bottomContent;
   QrcodeReaderView({
     Key key,
     @required this.onScan,
@@ -27,7 +30,10 @@ class QrcodeReaderView extends StatefulWidget {
     this.scanBoxRatio = 0.85,
     this.cornerColor,
     this.scanWidget,
-    this.size,
+    this.screenCamSize,
+    this.positionCam,
+    this.closePositionButton,
+    this.bottomContent,
   }) : super(key: key);
 
   @override
@@ -110,15 +116,15 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
   }
 
   final flashOpen = Image.asset(
-    "assets/tool_flashlight_open.png",
-    package: "super_qr_reader",
+    'assets/tool_flashlight_open.png',
+    package: 'super_qr_reader',
     width: 35,
     height: 35,
     color: Colors.white,
   );
   final flashClose = Image.asset(
-    "assets/tool_flashlight_close.png",
-    package: "super_qr_reader",
+    'assets/tool_flashlight_close.png',
+    package: 'super_qr_reader',
     width: 35,
     height: 35,
     color: Colors.white,
@@ -137,16 +143,25 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
             // color: Colors.black,
             child: LayoutBuilder(builder: (context, constraints) {
               final qrScanSize = constraints.maxWidth * widget.scanBoxRatio;
-              final mediaQuery = MediaQuery.of(context);
+              // final mediaQuery = MediaQuery.of(context);
               if (constraints.maxHeight < qrScanSize * 1.5) {
-                print("It is recommended that the height to scan area height ratio be greater than 1.5");
+                debugPrint(
+                  'It is recommended that the height to scan area height ratio be greater than 1.5',
+                );
               }
               return Stack(
                 children: <Widget>[
-                  Center(
+                  //ImagePreview
+                  Positioned(
+                    left: widget.positionCam.width ??
+                        (constraints.maxWidth - qrScanSize) / 2,
+                    top: widget.positionCam.height ??
+                        (constraints.maxHeight - qrScanSize) / 2,
                     child: SizedBox(
-                      width: widget.size.width ?? constraints.maxWidth * 0.84,
-                      height: widget.size.height ?? constraints.maxWidth * 0.84,
+                      width: widget.screenCamSize.width ??
+                          constraints.maxWidth * 0.84,
+                      height: widget.screenCamSize.height ??
+                          constraints.maxWidth * 0.84,
                       child: QrReaderView(
                         width: constraints.maxWidth,
                         height: constraints.maxHeight,
@@ -154,7 +169,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                       ),
                     ),
                   ),
-                  if (widget.headerWidget != null) widget.headerWidget,
+                  widget.headerWidget ?? SizedBox(),
+                  //Mask Position
                   widget.scanWidget == null
                       ? Positioned(
                           left: (constraints.maxWidth - qrScanSize) / 2,
@@ -171,77 +187,48 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                           ),
                         )
                       : widget.scanWidget,
+
                   Positioned(
-                    top: (constraints.maxHeight - qrScanSize) * (1 / 2) + qrScanSize + 24,
+                    top: (constraints.maxHeight - qrScanSize) * (1 / 2) +
+                        qrScanSize +
+                        24,
                     width: constraints.maxWidth,
                     child: Align(
                       alignment: Alignment.center,
-                      child: Column(
-                        children: <Widget>[
-                          GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: setFlashlight,
-                            child: openFlashlight ? flashOpen : flashClose,
-                          ),
-                          SizedBox(height: constraints.maxWidth * 0.05),
-                          DefaultTextStyle(
-                            style: TextStyle(color: Colors.white),
-                            child: widget.helpWidget ??
-                                Text(
-                                  "Coloque o código dentro do quadro",
-                                  textAlign: TextAlign.center,
-                                ),
-                          ),
-                        ],
+                      child: widget.bottomContent,
+                    ),
+                  ),
+
+                  Positioned(
+                    top: widget.closePositionButton?.height ??
+                        MediaQuery.of(context).size.width * .1,
+                    left: widget.closePositionButton?.width ??
+                        MediaQuery.of(context).size.width * .085,
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Icon(
+                        Icons.close,
+                        color: const Color(0xff969696),
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   top: (constraints.maxHeight - qrScanSize) * (1 / 2) +
-                  //       qrScanSize -
-                  //       12 -
-                  //       35,
-                  //   width: constraints.maxWidth,
-                  //   child: Align(
-                  //     alignment: Alignment.center,
-                  //     child: GestureDetector(
-                  //       behavior: HitTestBehavior.translucent,
-                  //       onTap: setFlashlight,
-                  //       child: openFlashlight ? flashOpen : flashClose,
-                  //     ),
-                  //   ),
-                  // ),
-                  // Positioned(
-                  //   width: constraints.maxWidth,
-                  //   bottom: constraints.maxHeight == mediaQuery.size.height
-                  //       ? 12 + mediaQuery.padding.top
-                  //       : 12,
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     children: <Widget>[
-                  //       Padding(
-                  //         padding: const EdgeInsets.only(right: 32),
-                  //         child: GestureDetector(
-                  //           behavior: HitTestBehavior.translucent,
-                  //           onTap: _scanImage,
-                  //           child: Container(
-                  //             width: 45,
-                  //             height: 45,
-                  //             alignment: Alignment.center,
-                  //             child: Image.asset(
-                  //               "assets/tool_img.png",
-                  //               package: "super_qr_reader",
-                  //               width: 25,
-                  //               height: 25,
-                  //               color: Colors.white54,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // )
+
+                  Positioned(
+                    top: widget.closePositionButton?.height ??
+                        MediaQuery.of(context).size.width * .1,
+                    right: widget.closePositionButton?.width ??
+                        MediaQuery.of(context).size.width * .085,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: setFlashlight,
+                      child: Icon(
+                        openFlashlight
+                            ? Icons.wb_sunny_outlined
+                            : Icons.wb_sunny,
+                        color: const Color(0xff969696),
+                      ),
+                    ),
+                  ),
                 ],
               );
             }),
@@ -298,7 +285,8 @@ class QrScanBoxPainter extends CustomPainter {
     // rightBottom
     path.moveTo(size.width, size.height - 50);
     path.lineTo(size.width, size.height - 12);
-    path.quadraticBezierTo(size.width, size.height, size.width - 12, size.height);
+    path.quadraticBezierTo(
+        size.width, size.height, size.width - 12, size.height);
     path.lineTo(size.width - 50, size.height);
     // leftBottom
     path.moveTo(50, size.height);
@@ -308,7 +296,8 @@ class QrScanBoxPainter extends CustomPainter {
 
     canvas.drawPath(path, borderPaint);
 
-    canvas.clipRRect(BorderRadius.all(Radius.circular(12)).toRRect(Offset.zero & size));
+    canvas.clipRRect(
+        BorderRadius.all(Radius.circular(12)).toRRect(Offset.zero & size));
 
     // 绘制横向网格
     // final linePaint = Paint();
@@ -343,8 +332,10 @@ class QrScanBoxPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(QrScanBoxPainter oldDelegate) => animationValue != oldDelegate.animationValue;
+  bool shouldRepaint(QrScanBoxPainter oldDelegate) =>
+      animationValue != oldDelegate.animationValue;
 
   @override
-  bool shouldRebuildSemantics(QrScanBoxPainter oldDelegate) => animationValue != oldDelegate.animationValue;
+  bool shouldRebuildSemantics(QrScanBoxPainter oldDelegate) =>
+      animationValue != oldDelegate.animationValue;
 }
