@@ -6,7 +6,9 @@ import 'package:super_qr_reader/src/qrcode_reader_view.dart';
 
 class ScanView extends StatefulWidget {
   final Color cornerColor;
-  ScanView({Key key, this.cornerColor}) : super(key: key);
+  final Widget scanWidget;
+
+  ScanView({Key key, this.cornerColor, this.scanWidget}) : super(key: key);
 
   @override
   _ScanViewState createState() => new _ScanViewState();
@@ -25,18 +27,20 @@ class _ScanViewState extends State<ScanView> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),
+        
         cornerColor: widget.cornerColor ?? Colors.white,
-        // scanWidget: Center(
-        //   child: Container(
-        //     // padding: EdgeInsets.all(),
-        //     decoration: BoxDecoration(
-        //       // color: Colors.red,
-        //       border: Border.all(width: 5.0, color: Colors.green, style: BorderStyle.solid),
-        //     ),
-        //     width: MediaQuery.of(context).size.width * (0.9),
-        //     height: MediaQuery.of(context).size.width * (0.9),
-        //   ),
-        // ),
+        scanWidget: widget.scanWidget ??
+            Center(
+              child: Container(
+                // padding: EdgeInsets.all(),
+                decoration: BoxDecoration(
+                  // color: Colors.red,
+                  border: Border.all(width: 5.0, color: Colors.green, style: BorderStyle.solid),
+                ),
+                width: MediaQuery.of(context).size.width * (0.9),
+                height: MediaQuery.of(context).size.width * (0.9),
+              ),
+            ),
       ),
     );
   }

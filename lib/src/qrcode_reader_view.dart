@@ -132,7 +132,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
             ),
           )
         : Material(
-            color: Colors.black,
+            // color: Colors.black,
             child: LayoutBuilder(builder: (context, constraints) {
               final qrScanSize = constraints.maxWidth * widget.scanBoxRatio;
               final mediaQuery = MediaQuery.of(context);
