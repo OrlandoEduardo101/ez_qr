@@ -17,6 +17,7 @@ class QrcodeReaderView extends StatefulWidget {
   final Widget helpWidget;
   final Color cornerColor;
   final Widget scanWidget;
+  final Size size;
   QrcodeReaderView({
     Key key,
     @required this.onScan,
@@ -26,6 +27,7 @@ class QrcodeReaderView extends StatefulWidget {
     this.scanBoxRatio = 0.85,
     this.cornerColor,
     this.scanWidget,
+    this.size,
   }) : super(key: key);
 
   @override
@@ -137,15 +139,14 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
               final qrScanSize = constraints.maxWidth * widget.scanBoxRatio;
               final mediaQuery = MediaQuery.of(context);
               if (constraints.maxHeight < qrScanSize * 1.5) {
-                print(
-                    "It is recommended that the height to scan area height ratio be greater than 1.5");
+                print("It is recommended that the height to scan area height ratio be greater than 1.5");
               }
               return Stack(
                 children: <Widget>[
                   Center(
                     child: SizedBox(
-                      width: constraints.maxWidth * 0.84,
-                      height: constraints.maxWidth * 0.84,
+                      width: widget.size.width ?? constraints.maxWidth * 0.84,
+                      height: widget.size.height ?? constraints.maxWidth * 0.84,
                       child: QrReaderView(
                         width: constraints.maxWidth,
                         height: constraints.maxHeight,
@@ -153,8 +154,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                       ),
                     ),
                   ),
-                  if (widget.headerWidget != null)
-                    widget.headerWidget,
+                  if (widget.headerWidget != null) widget.headerWidget,
                   widget.scanWidget == null
                       ? Positioned(
                           left: (constraints.maxWidth - qrScanSize) / 2,
@@ -172,9 +172,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                         )
                       : widget.scanWidget,
                   Positioned(
-                    top: (constraints.maxHeight - qrScanSize) * (1 / 2) +
-                        qrScanSize +
-                        24,
+                    top: (constraints.maxHeight - qrScanSize) * (1 / 2) + qrScanSize + 24,
                     width: constraints.maxWidth,
                     child: Align(
                       alignment: Alignment.center,
@@ -300,8 +298,7 @@ class QrScanBoxPainter extends CustomPainter {
     // rightBottom
     path.moveTo(size.width, size.height - 50);
     path.lineTo(size.width, size.height - 12);
-    path.quadraticBezierTo(
-        size.width, size.height, size.width - 12, size.height);
+    path.quadraticBezierTo(size.width, size.height, size.width - 12, size.height);
     path.lineTo(size.width - 50, size.height);
     // leftBottom
     path.moveTo(50, size.height);
@@ -311,8 +308,7 @@ class QrScanBoxPainter extends CustomPainter {
 
     canvas.drawPath(path, borderPaint);
 
-    canvas.clipRRect(
-        BorderRadius.all(Radius.circular(12)).toRRect(Offset.zero & size));
+    canvas.clipRRect(BorderRadius.all(Radius.circular(12)).toRRect(Offset.zero & size));
 
     // 绘制横向网格
     // final linePaint = Paint();
@@ -347,10 +343,8 @@ class QrScanBoxPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(QrScanBoxPainter oldDelegate) =>
-      animationValue != oldDelegate.animationValue;
+  bool shouldRepaint(QrScanBoxPainter oldDelegate) => animationValue != oldDelegate.animationValue;
 
   @override
-  bool shouldRebuildSemantics(QrScanBoxPainter oldDelegate) =>
-      animationValue != oldDelegate.animationValue;
+  bool shouldRebuildSemantics(QrScanBoxPainter oldDelegate) => animationValue != oldDelegate.animationValue;
 }
