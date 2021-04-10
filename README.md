@@ -1,6 +1,6 @@
 *This is a forked package from @hetian9288*
 
-# super_qr_reader
+# ez_qr
 
 QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
 
