@@ -2,9 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('flutter_qr_reader');
+  const channel = MethodChannel('flutter_qr_reader');
 
   setUp(() {
+    // ignore: avoid_types_on_closure_parameters
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
       return '42';
     });
@@ -14,6 +15,5 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
-  });
+  test('getPlatformVersion', () async {});
 }

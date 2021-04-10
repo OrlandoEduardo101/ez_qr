@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'qrcode_reader_controller.dart';
-import 'package:flutter/scheduler.dart';
 
 /// 使用前需已经获取相关权限
 /// Relevant privileges must be obtained before use
@@ -38,7 +38,7 @@ class QrcodeReaderView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  QrcodeReaderViewState createState() => new QrcodeReaderViewState();
+  QrcodeReaderViewState createState() => QrcodeReaderViewState();
 }
 
 /// 扫码后的后续操作
@@ -56,7 +56,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
     openFlashlight = false;
 
     SchedulerBinding.instance?.addPostFrameCallback((_) async {
-      bool isOk = await getPermissionOfCamera();
+      var isOk = await getPermissionOfCamera();
       if (isOk) {
         setState(() {
           hasCameraPermission = true;
@@ -68,7 +68,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
   }
 
   Future<bool> getPermissionOfCamera() async {
-    PermissionStatus status = await Permission.camera.request();
+    var status = await Permission.camera.request();
     return status == PermissionStatus.granted;
   }
 
@@ -100,10 +100,11 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
     return openFlashlight;
   }
 
+  // ignore: unused_element
   Future _scanImage() async {
     stopScan();
     final picker = ImagePicker();
-    PermissionStatus status = await Permission.camera.request();
+    var status = await Permission.camera.request();
     if (status == PermissionStatus.granted) {
       var image = await picker.getImage(source: ImageSource.gallery);
       if (image == null) {
@@ -274,7 +275,7 @@ class QrScanBoxPainter extends CustomPainter {
       ..color = cornerColor ?? Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5;
-    final path = new Path();
+    final path = Path();
     // leftTop
     path.moveTo(0, 50);
     path.lineTo(0, 12);
