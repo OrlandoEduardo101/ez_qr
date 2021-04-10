@@ -1,21 +1,56 @@
+![ez_qr](https://raw.githubusercontent.com/fogaiht/master/ez-qr.png)
+
+[![pub points](https://badges.bar/sentry/pub%20points)](https://pub.dev/packages/sentry/score) [![pub points](https://badges.bar/sentry/pub%20points)](https://pub.dev/packages/sentry/score) [![pub points](https://badges.bar/sentry/pub%20points)](https://pub.dev/packages/sentry/score) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://pub.dev/packages/effective_dart) [![All Contributors](https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<p align="left">
+
+ <a href="https://pub.dartlang.org/packages/ez_qr">
+    <img alt="ez_qr" src="https://img.shields.io/pub/v/ez_qr.svg">
+  </a>
+ <a href="https://github.com/Solido/awesome-flutter">
+    <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square">
+  </a>
+ 
+ <!-- <a href="https://www.buymeacoffee.com/gQyz2MR">
+    <img alt="Buy me a coffee" src="https://img.shields.io/badge/Donate-Buy%20Me%20A%20Coffee-yellow.svg">
+  </a> -->
+</p>
+
 *This is a forked package from @hetian9288*
 
 # ez_qr
 
-QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
+QR code (scan code/picture) recognition(AndroidView/UiKitView)
 
-# features:
-- place the code inside the square frame to get the information from QR code
-- select QR code from your local library from the image picker inside the ScanView
+A package that allows you to use the native camera to read qr code through images/files and has the flexibility to customize the view.
+
+## Currently supported features
+- Supports Android and iOS devices
+- Place the QR code inside the square/custom_shape frame to get the information from QR code
+- Select QR code from your local library from the image picker inside the ScanView
+- Uses OS default native camera
+- Accepts different types of standard and custom shapes (media, image, video, audio or any)
+
+If you have any feature that you want to see in this package, please feel free to issue a suggestion. 🎉
 
 
-## Getting Started
+
+## Qr code reader with default view
 
 ```dart
-import 'package:ez_qr/scan_view.dart';
+import 'package:ez_qr/ez_qr.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: HomePage());
+  }
+}
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => new _HomePageState();
@@ -24,12 +59,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String result = '';
 
-  var scanResult;
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,17 +66,19 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Package example app'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            RaisedButton(
+            ElevatedButton(
               onPressed: () async {
-                String results = await Navigator.push( // waiting for the scan results
+                String? results = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ScanView(), // open the scan view
+                    builder: (context) => ScanView(
+                      cornerColor: Colors.blue,
+                    ),
                   ),
                 );
 
@@ -57,15 +88,15 @@ class _HomePageState extends State<HomePage> {
                   });
                 }
               },
-              child: Text("扫码/tap to scan"),
+              child: Text('Tap to scan'),
             ),
-            Text(result), // display the scan results
+            Center(child: Text(result)),
           ],
         ),
       ),
     );
   }
-} 
+}
 ```
 
 ### For IOS

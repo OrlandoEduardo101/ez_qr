@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter/cupertino.dart';
-
 import 'package:ez_qr/ez_qr.dart';
 
 void main() => runApp(MyApp());
@@ -24,18 +22,13 @@ class _HomePageState extends State<HomePage> {
   String result = '';
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Package example app'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -57,9 +50,9 @@ class _HomePageState extends State<HomePage> {
                   });
                 }
               },
-              child: Text("Tap to scan"),
+              child: Text('Tap to scan'),
             ),
-            Text(result),
+            Center(child: Text(result)),
           ],
         ),
       ),

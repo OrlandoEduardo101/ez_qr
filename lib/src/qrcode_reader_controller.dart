@@ -9,18 +9,19 @@ import 'package:flutter/widgets.dart';
 
 class FlutterQrReader {
   static const MethodChannel _channel =
-      const MethodChannel('br.com.flutterando.ez_qr');
+      MethodChannel('br.com.flutterando.ez_qr');
 
   static Future<String> imgScan(File file) async {
     if (file.existsSync() == false) {
       return '';
     }
     try {
-      final rest =
-          await _channel.invokeMethod("imgQrCode", {"file": file.path});
+      final rest = await _channel.invokeMethod('imgQrCode', {
+        'file': file.path,
+      });
       return rest;
     } catch (e) {
-      print(e);
+      debugPrint('imgScan: $e');
       return '';
     }
   }
@@ -44,7 +45,7 @@ class QrReaderView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _QrReaderViewState createState() => new _QrReaderViewState();
+  _QrReaderViewState createState() => _QrReaderViewState();
 }
 
 class _QrReaderViewState extends State<QrReaderView> {
@@ -57,37 +58,37 @@ class _QrReaderViewState extends State<QrReaderView> {
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
-        viewType: "br.com.flutterando.ez_qr.reader_view",
+        viewType: 'br.com.flutterando.ez_qr.reader_view',
         creationParams: {
-          "width": (widget.width * window.devicePixelRatio).floor(),
-          "height": (widget.height * window.devicePixelRatio).floor(),
-          "extra_focus_interval": widget.autoFocusIntervalInMs,
-          "extra_torch_enabled": widget.torchEnabled,
+          'width': (widget.width * window.devicePixelRatio).floor(),
+          'height': (widget.height * window.devicePixelRatio).floor(),
+          'extra_focus_interval': widget.autoFocusIntervalInMs,
+          'extra_torch_enabled': widget.torchEnabled,
         },
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPlatformViewCreated,
-        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-          new Factory<OneSequenceGestureRecognizer>(
-            () => new EagerGestureRecognizer(),
-          ),
-        ].toSet(),
-      );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return UiKitView(
-        viewType: "br.com.flutterando.ez_qr.reader_view",
-        creationParams: {
-          "width": widget.width,
-          "height": widget.height,
-          "extra_focus_interval": widget.autoFocusIntervalInMs,
-          "extra_torch_enabled": widget.torchEnabled,
-        },
-        creationParamsCodec: const StandardMessageCodec(),
-        onPlatformViewCreated: _onPlatformViewCreated,
-        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
           Factory<OneSequenceGestureRecognizer>(
             () => EagerGestureRecognizer(),
           ),
-        ].toSet(),
+        },
+      );
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return UiKitView(
+        viewType: 'br.com.flutterando.ez_qr.reader_view',
+        creationParams: {
+          'width': widget.width,
+          'height': widget.height,
+          'extra_focus_interval': widget.autoFocusIntervalInMs,
+          'extra_torch_enabled': widget.torchEnabled,
+        },
+        creationParamsCodec: const StandardMessageCodec(),
+        onPlatformViewCreated: _onPlatformViewCreated,
+        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+          Factory<OneSequenceGestureRecognizer>(
+            () => EagerGestureRecognizer(),
+          ),
+        },
       );
     } else {
       return Text('The platform does not currently support');
@@ -116,12 +117,12 @@ class QrReaderViewController {
 
   Future _handleMessages(MethodCall call) async {
     switch (call.method) {
-      case "onQRCodeRead":
+      case 'onQRCodeRead':
         final points = <Offset>[];
-        if (call.arguments.containsKey("points")) {
-          final pointsStrs = call.arguments["points"];
+        if (call.arguments.containsKey('points')) {
+          final pointsStrs = call.arguments['points'];
           for (String point in pointsStrs) {
-            final offset = point.split(",");
+            final offset = point.split(',');
             points.add(
               Offset(
                 double.parse(offset.first),
@@ -131,14 +132,14 @@ class QrReaderViewController {
           }
         }
 
-        this.onQrBack(call.arguments["text"], points);
+        onQrBack(call.arguments['text'], points);
         break;
     }
   }
 
   // Turn on the flashlight
   Future<bool> setFlashlight() async {
-    return await _channel.invokeMethod("flashlight") as bool;
+    return await _channel.invokeMethod('flashlight') as bool;
   }
 
   // Camera Focus
@@ -149,11 +150,11 @@ class QrReaderViewController {
   // Start scanning
   Future startCamera(ReadChangeBack onQrBack) async {
     this.onQrBack = onQrBack;
-    return _channel.invokeMethod("startCamera");
+    return _channel.invokeMethod('startCamera');
   }
 
   // End scan code
   Future stopCamera() async {
-    return _channel.invokeMethod("stopCamera");
+    return _channel.invokeMethod('stopCamera');
   }
 }
