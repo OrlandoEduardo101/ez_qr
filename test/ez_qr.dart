@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const channel = MethodChannel('flutter_qr_reader');
+  const channel = MethodChannel('ez_qr');
 
   setUp(() {
     // ignore: avoid_types_on_closure_parameters

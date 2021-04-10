@@ -154,14 +154,14 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
 
   final flashOpen = Image.asset(
     'assets/tool_flashlight_open.png',
-    package: 'super_qr_reader',
+    package: 'ez_qr',
     width: 35,
     height: 35,
     color: Colors.white,
   );
   final flashClose = Image.asset(
     'assets/tool_flashlight_close.png',
-    package: 'super_qr_reader',
+    package: 'ez_qr',
     width: 35,
     height: 35,
     color: Colors.white,

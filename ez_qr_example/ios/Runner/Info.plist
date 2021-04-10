@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>example2</string>
+	<string>ez_qr_example</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -41,11 +41,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>io.flutter.embedded_views_preview</key>
-	<string>YES</string>
-	<key>NSCameraUsageDescription</key>
-	<string>You need to allow the access of camera to use EZ_QR</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>You need to allow the access of gallery to use EZ_QR</string>
 </dict>
 </plist>
