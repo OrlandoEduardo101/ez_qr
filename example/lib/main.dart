@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                     builder: (context) => ScanView(
                       cornerColor: Colors.blue,
+                      readerFrom: ReaderFrom.camera,
                     ),
                   ),
                 );
@@ -51,6 +52,26 @@ class _HomePageState extends State<HomePage> {
                 }
               },
               child: Text('Tap to scan'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                String? results = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScanView(
+                      cornerColor: Colors.blue,
+                      readerFrom: ReaderFrom.gallery,
+                    ),
+                  ),
+                );
+
+                if (results != null) {
+                  setState(() {
+                    result = results;
+                  });
+                }
+              },
+              child: Text('Take from gallery'),
             ),
             Center(child: Text(result)),
           ],

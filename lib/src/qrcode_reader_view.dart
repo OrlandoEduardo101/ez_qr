@@ -6,13 +6,14 @@ import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../ez_qr.dart';
 import 'qrcode_reader_controller.dart';
 
-/// 使用前需已经获取相关权限
 /// Relevant privileges must be obtained before use
 class QrcodeReaderView extends StatefulWidget {
-  final Widget? headerWidget;
   final Future Function(String) onScan;
+  final ReaderFrom readerFrom;
+  final Widget? headerWidget;
   final double? scanBoxRatio;
   final Color? boxLineColor;
   final Widget? helpWidget;
@@ -25,6 +26,7 @@ class QrcodeReaderView extends StatefulWidget {
   QrcodeReaderView({
     Key? key,
     required this.onScan,
+    this.readerFrom = ReaderFrom.camera,
     this.headerWidget,
     this.boxLineColor = Colors.cyanAccent,
     this.helpWidget,
@@ -41,7 +43,7 @@ class QrcodeReaderView extends StatefulWidget {
   QrcodeReaderViewState createState() => QrcodeReaderViewState();
 }
 
-/// 扫码后的后续操作
+/// Follow-up operations after scanning the code
 /// ```dart
 /// GlobalKey<QrcodeReaderViewState> qrViewKey = GlobalKey();
 /// qrViewKey.currentState.startScan();
@@ -50,25 +52,54 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
   late QrReaderViewController _controller;
   late bool openFlashlight;
   bool hasCameraPermission = false;
+  bool hasGalleryPermission = false;
   @override
   void initState() {
     super.initState();
     openFlashlight = false;
 
     SchedulerBinding.instance?.addPostFrameCallback((_) async {
-      var isOk = await getPermissionOfCamera();
-      if (isOk) {
+      await setPermissionOfCamera();
+      await setPermissionOfGallery();
+    });
+  }
+
+  Future<void> setPermissionOfCamera() async {
+    final cameraPermission = await Permission.camera.isGranted;
+    var isCameraOk = !cameraPermission ? await getPermissionOfCamera() : true;
+
+    if (isCameraOk) {
+      setState(() {
+        hasCameraPermission = true;
+      });
+    } else {
+      Navigator.of(context).pop('Sem permissões para acessar a câmera');
+    }
+  }
+
+  Future<void> setPermissionOfGallery() async {
+    if (widget.readerFrom == ReaderFrom.gallery) {
+      final galleryPermission = await Permission.storage.isGranted;
+      var isGalleryOK =
+          !galleryPermission ? await getPermissionOfGallery() : true;
+
+      if (isGalleryOK) {
         setState(() {
-          hasCameraPermission = true;
+          hasGalleryPermission = true;
         });
       } else {
-        Navigator.of(context).pop('Sem permissões para acessar a câmera');
+        Navigator.of(context).pop('Sem permissões para acessar a galeria');
       }
-    });
+    }
   }
 
   Future<bool> getPermissionOfCamera() async {
     var status = await Permission.camera.request();
+    return status == PermissionStatus.granted;
+  }
+
+  Future<bool> getPermissionOfGallery() async {
+    var status = await Permission.storage.request();
     return status == PermissionStatus.granted;
   }
 
@@ -104,11 +135,9 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
     return openFlashlight;
   }
 
-  // ignore: unused_element
   Future _scanImage() async {
-    stopScan();
     final picker = ImagePicker();
-    var status = await Permission.camera.request();
+    var status = await Permission.storage.request();
     if (status == PermissionStatus.granted) {
       var image = await picker.getImage(source: ImageSource.gallery);
       if (image == null) {
@@ -140,17 +169,18 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
 
   @override
   Widget build(BuildContext context) {
-    return !hasCameraPermission
-        ? Material(
-            color: Colors.black,
-            child: Container(
+    return Material(
+      color: !hasCameraPermission ? Colors.black : null,
+      child: !hasCameraPermission
+          ? Container(
               color: Colors.black,
-            ),
-          )
-        : Material(
-            child: GestureDetector(
-              onTap: cameraFocus,
-              child: LayoutBuilder(builder: (context, constraints) {
+            )
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                if (widget.readerFrom == ReaderFrom.gallery) {
+                  _scanImage();
+                  return Container(color: Colors.white);
+                }
                 final qrScanSize =
                     constraints.maxWidth * (widget.scanBoxRatio ?? 1);
                 // final mediaQuery = MediaQuery.of(context);
@@ -241,9 +271,9 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                     ),
                   ],
                 );
-              }),
+              },
             ),
-          );
+    );
   }
 
   @override

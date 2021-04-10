@@ -144,7 +144,8 @@ class QrReaderViewController {
 
   // Camera Focus
   Future cameraFocus() async {
-    return await _channel.invokeMethod("focus");
+    debugPrint('aea');
+    return await _channel.invokeMethod('focus');
   }
 
   // Start scanning

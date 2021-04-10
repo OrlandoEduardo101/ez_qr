@@ -84,8 +84,8 @@ public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeRead
     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
         switch (methodCall.method) {
             case "focus":
-                _view.forceAutoFocus();
                 println("focused!");
+                _view.forceAutoFocus();
                 break;
             case "flashlight":
                 _view.setTorchEnabled(!flashlight);

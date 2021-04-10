@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../ez_qr.dart';
 import 'qrcode_reader_view.dart';
 
 class ScanView extends StatefulWidget {
@@ -10,6 +11,7 @@ class ScanView extends StatefulWidget {
   final Size? positionCam;
   final Function(String)? afterScan;
   final Widget? bottomContent;
+  final ReaderFrom readerFrom;
 
   ScanView({
     Key? key,
@@ -19,6 +21,7 @@ class ScanView extends StatefulWidget {
     this.positionCam,
     this.afterScan,
     this.bottomContent,
+    required this.readerFrom,
   }) : super(key: key);
 
   @override
@@ -32,10 +35,11 @@ class _ScanViewState extends State<ScanView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: QrcodeReaderView(
+        readerFrom: widget.readerFrom,
         key: _key,
         onScan: onScan,
         // headerWidget: AppBar(
-        //   backgroundColor: Colors.transparent,
+        //   backgroundColor: Colors.red,
         //   elevation: 0.0,
         // ),
         screenCamSize: widget.screenCamSize,
@@ -64,7 +68,7 @@ class _ScanViewState extends State<ScanView> {
                 children: [
                   Flexible(
                     child: Text(
-                      'Centralize o QR Code na área demarcada e tire a foto',
+                      'Centralize o QR Code na área demarcada',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
