@@ -1,4 +1,4 @@
-package me.hetian.flutter_qr_reader;
+package br.com.flutterando.ez_qr;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -25,7 +25,7 @@ import com.google.zxing.PlanarYUVLuminanceSource;
 
 import java.io.IOException;
 
-import me.hetian.flutter_qr_reader.readerView.SimpleLog;
+import br.com.flutterando.ez_qr.reader_view.SimpleLog;
 import com.google.zxing.client.android.camera.open.OpenCamera;
 import com.google.zxing.client.android.camera.open.OpenCameraInterface;
 

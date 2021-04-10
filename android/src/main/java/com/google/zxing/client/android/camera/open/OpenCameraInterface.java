@@ -18,7 +18,7 @@ package com.google.zxing.client.android.camera.open;
 
 import android.hardware.Camera;
 
-import me.hetian.flutter_qr_reader.readerView.SimpleLog;
+import br.com.flutterando.ez_qr.reader_view.SimpleLog;
 
 
 /**

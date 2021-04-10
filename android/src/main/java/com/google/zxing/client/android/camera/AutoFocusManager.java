@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.RejectedExecutionException;
 
-import me.hetian.flutter_qr_reader.readerView.SimpleLog;
+import br.com.flutterando.ez_qr.reader_view.SimpleLog;
 
 final class AutoFocusManager implements Camera.AutoFocusCallback {
 

@@ -1,4 +1,4 @@
-package me.hetian.flutter_qr_reader.factorys;
+package br.com.flutterando.ez_qr.factorys;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.StandardMessageCodec;
 import io.flutter.plugin.platform.PlatformView;
 import io.flutter.plugin.platform.PlatformViewFactory;
-import me.hetian.flutter_qr_reader.views.QrReaderView;
+import br.com.flutterando.ez_qr.views.QrReaderView;
 
 public class QrReaderFactory extends PlatformViewFactory {
 

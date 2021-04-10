@@ -1,4 +1,4 @@
-group 'me.hetian.flutter_qr_reader'
+group 'br.com.flutterando.ez_qr'
 version '1.0-SNAPSHOT'
 
 buildscript {

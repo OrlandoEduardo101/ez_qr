@@ -1,4 +1,4 @@
-package me.hetian.flutter_qr_reader;
+package br.com.flutterando.ez_qr;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
@@ -10,15 +10,15 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-import me.hetian.flutter_qr_reader.factorys.QrReaderFactory;
+import br.com.flutterando.ez_qr.factorys.QrReaderFactory;
 
 
 /** FlutterQrReaderPlugin */
 public class FlutterQrReaderPlugin implements MethodCallHandler {
 
 //  private static final int REQUEST_CODE_CAMERA_PERMISSION = 3777;
-  private static final String CHANNEL_NAME = "me.hetian.flutter_qr_reader";
-  private static final String CHANNEL_VIEW_NAME = "me.hetian.flutter_qr_reader.reader_view";
+  private static final String CHANNEL_NAME = "br.com.flutterando.ez_qr";
+  private static final String CHANNEL_VIEW_NAME = "br.com.flutterando.ez_qr.reader_view";
 
 
   private  Registrar registrar;

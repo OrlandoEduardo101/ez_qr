@@ -1,4 +1,4 @@
-package me.hetian.flutter_qr_reader.readerView;
+package br.com.flutterando.ez_qr.reader_view;
 
 import android.graphics.Point;
 import android.graphics.PointF;

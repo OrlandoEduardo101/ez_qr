@@ -32,7 +32,7 @@
     if ([super init]) {
         _registrar = registrar;
         _viewId = viewId;
-        NSString *channelName = [NSString stringWithFormat:@"me.hetian.flutter_qr_reader.reader_view_%lld", viewId];
+        NSString *channelName = [NSString stringWithFormat:@"br.com.flutterando.ez_qr.reader_view_%lld", viewId];
         _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:registrar.messenger];
         __weak __typeof__(self) weakSelf = self;
         [_channel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {

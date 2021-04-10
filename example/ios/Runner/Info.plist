@@ -2,16 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>io.flutter.embedded_views_preview</key>
-	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>你的操作需要访问照片库权限</string>
-	<key>NSCameraUsageDescription</key>
-	<string>你的操作需要访问相机权限</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>你的操作需要访问录像机权限</string>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -19,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>flutter_qr_reader_example</string>
+	<string>example2</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

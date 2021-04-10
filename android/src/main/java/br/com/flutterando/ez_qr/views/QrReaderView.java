@@ -1,4 +1,4 @@
-package me.hetian.flutter_qr_reader.views;
+package br.com.flutterando.ez_qr.views;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -17,7 +17,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.platform.PlatformView;
-import me.hetian.flutter_qr_reader.readerView.QRCodeReaderView;
+import br.com.flutterando.ez_qr.reader_view.QRCodeReaderView;
 
 public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeReadListener, MethodChannel.MethodCallHandler {
 
@@ -49,7 +49,7 @@ public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeRead
         _view.setTorchEnabled((boolean)mParams.get(EXTRA_TORCH_ENABLED));
 
         // 操作监听
-        mMethodChannel = new MethodChannel(registrar.messenger(), "me.hetian.flutter_qr_reader.reader_view_" + id);
+        mMethodChannel = new MethodChannel(registrar.messenger(), "br.com.flutterando.ez_qr.reader_view_" + id);
         mMethodChannel.setMethodCallHandler(this);
     }
 

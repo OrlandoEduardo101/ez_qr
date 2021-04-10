@@ -12,7 +12,7 @@ QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
 ## Getting Started
 
 ```dart
-import 'package:super_qr_reader/scan_view.dart';
+import 'package:ez_qr/scan_view.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);

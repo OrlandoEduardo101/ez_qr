@@ -1,6 +1,6 @@
-# super_qr_reader_example
+# example2
 
-Demonstrates how to use the super_qr_reader package.
+A new Flutter project.
 
 ## Getting Started
 

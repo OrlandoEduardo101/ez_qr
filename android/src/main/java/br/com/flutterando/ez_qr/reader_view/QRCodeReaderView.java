@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.hetian.flutter_qr_reader.readerView;
+package br.com.flutterando.ez_qr.reader_view;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 
-import 'package:super_qr_reader/super_qr_reader.dart';
+import 'package:ez_qr/ez_qr.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => new _HomePageState();
@@ -40,9 +40,9 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            RaisedButton(
+            ElevatedButton(
               onPressed: () async {
-                String results = await Navigator.push(
+                String? results = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ScanView(
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                   });
                 }
               },
-              child: Text("扫码/tap to scan"),
+              child: Text("Tap to scan"),
             ),
             Text(result),
           ],

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 
-import 'package:super_qr_reader/src/qrcode_reader_view.dart';
+import 'package:ez_qr/src/qrcode_reader_view.dart';
 
 class ScanView extends StatefulWidget {
-  final Color cornerColor;
-  final Widget scanWidget;
-  final Size screenCamSize;
-  final Size positionCam;
-  final Function(String) afterScan;
-  final Widget bottomContent;
+  final Color? cornerColor;
+  final Widget? scanWidget;
+  final Size? screenCamSize;
+  final Size? positionCam;
+  final Function(String)? afterScan;
+  final Widget? bottomContent;
 
   ScanView({
-    Key key,
+    Key? key,
     this.cornerColor,
     this.scanWidget,
     this.screenCamSize,
@@ -78,10 +78,10 @@ class _ScanViewState extends State<ScanView> {
   }
 
   Future onScan(String data) async {
-    if (widget.afterScan == null) {
-      Navigator.of(context).pop(data);
+    if (widget.afterScan != null) {
+      widget.afterScan!(data);
     } else {
-      widget.afterScan(data);
+      Navigator.of(context).pop(data);
     }
   }
 }
