@@ -90,6 +90,10 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
     _controller.startCamera(_onQrBack);
   }
 
+  void cameraFocus() async {
+    await _controller.cameraFocus();
+  }
+
   void stopScan() {
     _controller.stopCamera();
   }
@@ -143,99 +147,101 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
             ),
           )
         : Material(
-            // color: Colors.black,
-            child: LayoutBuilder(builder: (context, constraints) {
-              final qrScanSize =
-                  constraints.maxWidth * (widget.scanBoxRatio ?? 1);
-              // final mediaQuery = MediaQuery.of(context);
-              if (constraints.maxHeight < qrScanSize * 1.5) {
-                debugPrint(
-                  'It is recommended that the height to scan area height ratio be greater than 1.5',
-                );
-              }
-              return Stack(
-                children: <Widget>[
-                  //ImagePreview
-                  Positioned(
-                    left: widget.positionCam?.width ??
-                        (constraints.maxWidth - qrScanSize) / 2,
-                    top: widget.positionCam?.height ??
-                        (constraints.maxHeight - qrScanSize) / 2,
-                    child: SizedBox(
-                      width: widget.screenCamSize?.width ??
-                          constraints.maxWidth * 0.84,
-                      height: widget.screenCamSize?.height ??
-                          constraints.maxWidth * 0.84,
-                      child: QrReaderView(
-                        width: constraints.maxWidth,
-                        height: constraints.maxHeight,
-                        callback: _onCreateController,
-                      ),
-                    ),
-                  ),
-                  widget.headerWidget ?? SizedBox(),
-                  //Mask Position
-                  //
-                  widget.scanWidget ??
-                      Positioned(
-                        left: (constraints.maxWidth - qrScanSize) / 2,
-                        top: (constraints.maxHeight - qrScanSize) / 2,
-                        child: CustomPaint(
-                          painter: QrScanBoxPainter(
-                            boxLineColor: widget.boxLineColor ?? Colors.red,
-                            cornerColor: widget.cornerColor ?? Colors.green,
-                          ),
-                          child: SizedBox(
-                            width: qrScanSize,
-                            height: qrScanSize,
-                          ),
+            child: GestureDetector(
+              onTap: cameraFocus,
+              child: LayoutBuilder(builder: (context, constraints) {
+                final qrScanSize =
+                    constraints.maxWidth * (widget.scanBoxRatio ?? 1);
+                // final mediaQuery = MediaQuery.of(context);
+                if (constraints.maxHeight < qrScanSize * 1.5) {
+                  debugPrint(
+                    'It is recommended that the height to scan area height ratio be greater than 1.5',
+                  );
+                }
+                return Stack(
+                  children: <Widget>[
+                    //ImagePreview
+                    Positioned(
+                      left: widget.positionCam?.width ??
+                          (constraints.maxWidth - qrScanSize) / 2,
+                      top: widget.positionCam?.height ??
+                          (constraints.maxHeight - qrScanSize) / 2,
+                      child: SizedBox(
+                        width: widget.screenCamSize?.width ??
+                            constraints.maxWidth * 0.84,
+                        height: widget.screenCamSize?.height ??
+                            constraints.maxWidth * 0.84,
+                        child: QrReaderView(
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                          callback: _onCreateController,
                         ),
                       ),
-
-                  Positioned(
-                    top: (constraints.maxHeight - qrScanSize) * (1 / 2) +
-                        qrScanSize +
-                        24,
-                    width: constraints.maxWidth,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: widget.bottomContent,
                     ),
-                  ),
+                    widget.headerWidget ?? SizedBox(),
+                    //Mask Position
+                    //
+                    widget.scanWidget ??
+                        Positioned(
+                          left: (constraints.maxWidth - qrScanSize) / 2,
+                          top: (constraints.maxHeight - qrScanSize) / 2,
+                          child: CustomPaint(
+                            painter: QrScanBoxPainter(
+                              boxLineColor: widget.boxLineColor ?? Colors.red,
+                              cornerColor: widget.cornerColor ?? Colors.green,
+                            ),
+                            child: SizedBox(
+                              width: qrScanSize,
+                              height: qrScanSize,
+                            ),
+                          ),
+                        ),
 
-                  Positioned(
-                    top: widget.closePositionButton?.height ??
-                        MediaQuery.of(context).size.width * .1,
-                    left: widget.closePositionButton?.width ??
-                        MediaQuery.of(context).size.width * .085,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Icon(
-                        Icons.close,
-                        color: const Color(0xff969696),
+                    Positioned(
+                      top: (constraints.maxHeight - qrScanSize) * (1 / 2) +
+                          qrScanSize +
+                          24,
+                      width: constraints.maxWidth,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: widget.bottomContent,
                       ),
                     ),
-                  ),
 
-                  Positioned(
-                    top: widget.closePositionButton?.height ??
-                        MediaQuery.of(context).size.width * .1,
-                    right: widget.closePositionButton?.width ??
-                        MediaQuery.of(context).size.width * .085,
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: setFlashlight,
-                      child: Icon(
-                        openFlashlight
-                            ? Icons.wb_sunny_outlined
-                            : Icons.wb_sunny,
-                        color: const Color(0xff969696),
+                    Positioned(
+                      top: widget.closePositionButton?.height ??
+                          MediaQuery.of(context).size.width * .1,
+                      left: widget.closePositionButton?.width ??
+                          MediaQuery.of(context).size.width * .085,
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Icons.close,
+                          color: const Color(0xff969696),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            }),
+
+                    Positioned(
+                      top: widget.closePositionButton?.height ??
+                          MediaQuery.of(context).size.width * .1,
+                      right: widget.closePositionButton?.width ??
+                          MediaQuery.of(context).size.width * .085,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: setFlashlight,
+                        child: Icon(
+                          openFlashlight
+                              ? Icons.wb_sunny_outlined
+                              : Icons.wb_sunny,
+                          color: const Color(0xff969696),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+            ),
           );
   }
 

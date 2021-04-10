@@ -64,7 +64,7 @@ public class FlutterQrReaderPlugin implements MethodCallHandler {
     new AsyncTask<String, Integer, String>() {
       @Override
       protected String doInBackground(String... params) {
-        // 解析二维码/条码
+        // Analyze two-dimensional code/bar code
         return QRCodeDecoder.syncDecodeQRCode(filePath);
       }
       @Override

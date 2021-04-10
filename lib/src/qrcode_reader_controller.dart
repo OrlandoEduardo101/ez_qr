@@ -141,6 +141,11 @@ class QrReaderViewController {
     return await _channel.invokeMethod("flashlight") as bool;
   }
 
+  // Camera Focus
+  Future cameraFocus() async {
+    return await _channel.invokeMethod("focus");
+  }
+
   // Start scanning
   Future startCamera(ReadChangeBack onQrBack) async {
     this.onQrBack = onQrBack;

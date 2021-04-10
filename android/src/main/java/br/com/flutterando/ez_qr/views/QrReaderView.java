@@ -19,6 +19,8 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.platform.PlatformView;
 import br.com.flutterando.ez_qr.reader_view.QRCodeReaderView;
 
+import static java.sql.DriverManager.println;
+
 public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeReadListener, MethodChannel.MethodCallHandler {
 
     private final MethodChannel mMethodChannel;
@@ -35,7 +37,7 @@ public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeRead
         this.mParams = params;
         this.mRegistrar = registrar;
 
-        // 创建视图
+        // Create view
         int width = (int) mParams.get("width");
         int height = (int) mParams.get("height");
         _view = new QRCodeReaderView(mContext);
@@ -44,11 +46,11 @@ public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeRead
         _view.setOnQRCodeReadListener(this);
         _view.setQRDecodingEnabled(true);
         _view.forceAutoFocus();
-        int interval = mParams.containsKey(EXTRA_FOCUS_INTERVAL) ? (int) mParams.get(EXTRA_FOCUS_INTERVAL) : 2000;
+        int interval = mParams.containsKey(EXTRA_FOCUS_INTERVAL) ? (int) mParams.get(EXTRA_FOCUS_INTERVAL) : 1000;
         _view.setAutofocusInterval(interval);
         _view.setTorchEnabled((boolean)mParams.get(EXTRA_TORCH_ENABLED));
 
-        // 操作监听
+        // Operation monitoring
         mMethodChannel = new MethodChannel(registrar.messenger(), "br.com.flutterando.ez_qr.reader_view_" + id);
         mMethodChannel.setMethodCallHandler(this);
     }
@@ -81,6 +83,10 @@ public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeRead
     @Override
     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
         switch (methodCall.method) {
+            case "focus":
+                _view.forceAutoFocus();
+                println("focused!");
+                break;
             case "flashlight":
                 _view.setTorchEnabled(!flashlight);
                 flashlight = !flashlight;

@@ -15,7 +15,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 /**
- * 描述:解析二维码图片
+ * Description: Analyze the QR code picture
  */
 public class QRCodeDecoder {
     public static final Map<DecodeHintType, Object> HINTS = new EnumMap<>(DecodeHintType.class);
@@ -45,19 +45,21 @@ public class QRCodeDecoder {
     private QRCodeDecoder() {
     }
     /**
-     * 同步解析本地图片二维码。该方法是耗时操作，请在子线程中调用。
-     *
-     * @param picturePath 要解析的二维码图片本地路径
-     * @return 返回二维码图片里的内容 或 null
+     * Analyze the QR code of the local picture synchronously. 
+     * This method is a time-consuming operation, please call it in a child thread.
+     * 
+     * @param picturePath The local path of the QR code image to be parsed
+     * @return Return the content in the QR code image or null
      */
     public static String syncDecodeQRCode(String picturePath) {
         return syncDecodeQRCode(getDecodeAbleBitmap(picturePath));
     }
     /**
-     * 同步解析bitmap二维码。该方法是耗时操作，请在子线程中调用。
-     *
-     * @param bitmap 要解析的二维码图片
-     * @return 返回二维码图片里的内容 或 null
+     * Analyze the bitmap QR code synchronously.
+     * This method is a time-consuming operation, please call it in a child thread.
+     * 
+     * @param bitmap QR code image to be parsed
+     * @return Return the content in the QR code image or null
      */
     public static String syncDecodeQRCode(Bitmap bitmap) {
         Result result = null;
@@ -84,9 +86,11 @@ public class QRCodeDecoder {
         }
     }
     /**
-     * 将本地图片文件转换成可解码二维码的 Bitmap。为了避免图片太大，这里对图片进行了压缩。感谢 https://github.com/devilsen 提的 PR
+     * Convert local image files into Bitmaps that can decode QR codes. 
+     * In order to avoid the picture being too big, the picture is compressed here. 
+     * Thanks to https://github.com/devilsen for the PR
      *
-     * @param picturePath 本地图片文件路径
+     * @param picturePath Local image file path
      * @return
      */
     private static Bitmap getDecodeAbleBitmap(String picturePath) {
