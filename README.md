@@ -1,4 +1,4 @@
-![ez_qr](https://raw.githubusercontent.com/fogaiht/master/ez-qr.png)
+<img src="https://raw.githubusercontent.com/fogaiht/ez_qr/master/ez-qr.png" width=150>
 
 [![pub points](https://badges.bar/sentry/pub%20points)](https://pub.dev/packages/sentry/score) [![pub points](https://badges.bar/sentry/pub%20points)](https://pub.dev/packages/sentry/score) [![pub points](https://badges.bar/sentry/pub%20points)](https://pub.dev/packages/sentry/score) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://pub.dev/packages/effective_dart) [![All Contributors](https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
