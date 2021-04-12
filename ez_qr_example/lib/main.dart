@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => new _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () async {
-                String? results = await Navigator.push(
+                var results = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ScanView(
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                String? results = await Navigator.push(
+                var results = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ScanView(
