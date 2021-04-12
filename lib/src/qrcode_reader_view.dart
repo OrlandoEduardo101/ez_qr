@@ -152,21 +152,6 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
     }
   }
 
-  final flashOpen = Image.asset(
-    'assets/tool_flashlight_open.png',
-    package: 'ez_qr',
-    width: 35,
-    height: 35,
-    color: Colors.white,
-  );
-  final flashClose = Image.asset(
-    'assets/tool_flashlight_close.png',
-    package: 'ez_qr',
-    width: 35,
-    height: 35,
-    color: Colors.white,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Material(
