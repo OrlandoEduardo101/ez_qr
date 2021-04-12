@@ -141,14 +141,14 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
     if (status == PermissionStatus.granted) {
       var image = await picker.getImage(source: ImageSource.gallery);
       if (image == null) {
-        startScan();
+        Navigator.of(context).pop();
         return;
       }
       final file = File(image.path);
       final rest = await FlutterQrReader.imgScan(file);
       await widget.onScan(rest);
     } else {
-      startScan();
+      return;
     }
   }
 
@@ -164,7 +164,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
               builder: (context, constraints) {
                 if (widget.readerFrom == ReaderFrom.gallery) {
                   _scanImage();
-                  return Container(color: Colors.white);
+                  return Container(color: Colors.transparent);
                 }
                 final qrScanSize =
                     constraints.maxWidth * (widget.scanBoxRatio ?? 1);
@@ -259,11 +259,6 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
               },
             ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }
 
