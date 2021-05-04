@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Package example app'),
@@ -39,8 +40,28 @@ class _HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ScanView(
-                      cornerColor: Colors.blue,
                       readerFrom: ReaderFrom.camera,
+                      screenCamSize: Size(
+                        size.width * .825,
+                        size.height * .53,
+                      ),
+                      positionCam: Size(
+                        size.width * .085,
+                        size.height * .16,
+                      ),
+                      cornerColor: const Color(0xff555555),
+                      scanWidget: Center(
+                        child: ClipPath(
+                          clipper: Mask(),
+                          child: Container(
+                            decoration:
+                                BoxDecoration(color: const Color(0xff555555)),
+                          ),
+                        ),
+                      ),
+                      afterScan: (qrCodeResult) {
+                        print(qrCodeResult);
+                      },
                     ),
                   ),
                 );
@@ -78,5 +99,33 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+}
+
+class Mask extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var qrHole = RRect.fromLTRBR(
+      size.width * .085,
+      size.height * .16,
+      size.width * .91,
+      size.height * .69,
+      Radius.circular(10),
+    );
+
+    var path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width * 0, size.height * 1)
+      ..lineTo(size.width * 1, size.height * 1)
+      ..lineTo(size.width * 1, size.height * 0)
+      ..fillType = PathFillType.evenOdd
+      ..addRRect(qrHole);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return oldClipper != this;
   }
 }

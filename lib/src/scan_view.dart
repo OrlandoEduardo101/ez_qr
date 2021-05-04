@@ -83,6 +83,7 @@ class _ScanViewState extends State<ScanView> {
   Future onScan(String data) async {
     if (widget.afterScan != null) {
       widget.afterScan!(data);
+      Navigator.of(context).pop(data);
     } else {
       Navigator.of(context).pop(data);
     }
