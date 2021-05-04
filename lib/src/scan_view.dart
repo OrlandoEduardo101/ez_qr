@@ -12,6 +12,9 @@ class ScanView extends StatefulWidget {
   final Function(String)? afterScan;
   final Widget? bottomContent;
   final ReaderFrom readerFrom;
+  final MaskType? maskType;
+  final double? squareMaskScale;
+  final CustomMaskData? customMaskData;
 
   ScanView({
     Key? key,
@@ -22,6 +25,9 @@ class ScanView extends StatefulWidget {
     this.afterScan,
     this.bottomContent,
     required this.readerFrom,
+    this.maskType = MaskType.fullscreen,
+    this.squareMaskScale = 1,
+    this.customMaskData,
   }) : super(key: key);
 
   @override
@@ -38,28 +44,13 @@ class _ScanViewState extends State<ScanView> {
         readerFrom: widget.readerFrom,
         key: _key,
         onScan: onScan,
-        // headerWidget: AppBar(
-        //   backgroundColor: Colors.red,
-        //   elevation: 0.0,
-        // ),
+        maskType: widget.maskType,
         screenCamSize: widget.screenCamSize,
         positionCam: widget.positionCam,
         cornerColor: widget.cornerColor ?? Colors.white,
-        scanWidget: widget.scanWidget ??
-            Center(
-              child: Container(
-                // padding: EdgeInsets.all(),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 5.0,
-                    color: Colors.green,
-                    style: BorderStyle.solid,
-                  ),
-                ),
-                width: MediaQuery.of(context).size.width * (0.9),
-                height: MediaQuery.of(context).size.width * (0.9),
-              ),
-            ),
+        scanWidget: widget.scanWidget,
+        squareMaskScale: widget.squareMaskScale,
+        customMaskData: widget.customMaskData,
         bottomContent: widget.bottomContent ??
             Container(
               padding: EdgeInsets.symmetric(horizontal: 64),

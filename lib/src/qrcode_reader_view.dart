@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../ez_qr.dart';
+import 'masks/custom_mask.dart';
 import 'qrcode_reader_controller.dart';
 
 /// Relevant privileges must be obtained before use
@@ -23,6 +24,10 @@ class QrcodeReaderView extends StatefulWidget {
   final Size? positionCam;
   final Size? closePositionButton;
   final Widget? bottomContent;
+  final MaskType? maskType;
+  final double? squareMaskScale;
+  final CustomMaskData? customMaskData;
+
   QrcodeReaderView({
     Key? key,
     required this.onScan,
@@ -37,6 +42,9 @@ class QrcodeReaderView extends StatefulWidget {
     this.positionCam,
     this.closePositionButton,
     this.bottomContent,
+    this.maskType,
+    this.squareMaskScale = 1.0,
+    this.customMaskData,
   }) : super(key: key);
 
   @override
@@ -200,20 +208,64 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                     //Mask Position
                     //
                     widget.scanWidget ??
-                        Positioned(
-                          left: (constraints.maxWidth - qrScanSize) / 2,
-                          top: (constraints.maxHeight - qrScanSize) / 2,
-                          child: CustomPaint(
-                            painter: QrScanBoxPainter(
-                              boxLineColor: widget.boxLineColor ?? Colors.red,
-                              cornerColor: widget.cornerColor ?? Colors.green,
-                            ),
-                            child: SizedBox(
-                              width: qrScanSize,
-                              height: qrScanSize,
-                            ),
-                          ),
-                        ),
+                        (widget.maskType == MaskType.square
+                            ? ClipPath(
+                                clipper: SquareMask(constraints,
+                                    scale: widget.squareMaskScale),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xff555555)),
+                                ),
+                              )
+                            : widget.maskType == MaskType.roudedCorner
+                                ? ClipPath(
+                                    clipper: RoundedCornerMask(),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xff555555)),
+                                    ),
+                                  )
+                                : widget.maskType == MaskType.custom
+                                    ? ClipPath(
+                                        clipper: CustomMask(
+                                          constraints,
+                                          widget.customMaskData ??
+                                              CustomMaskData(
+                                                horizontalDots: Offset(
+                                                  0,
+                                                  50,
+                                                ),
+                                                verticalDots: Offset(
+                                                  0,
+                                                  50,
+                                                ),
+                                              ),
+                                        ),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xff555555)),
+                                        ),
+                                      )
+                                    : Positioned(
+                                        left: (constraints.maxWidth -
+                                                qrScanSize) /
+                                            2,
+                                        top: (constraints.maxHeight -
+                                                qrScanSize) /
+                                            2,
+                                        child: CustomPaint(
+                                          painter: QrScanBoxPainter(
+                                            boxLineColor: widget.boxLineColor ??
+                                                Colors.red,
+                                            cornerColor: widget.cornerColor ??
+                                                Colors.green,
+                                          ),
+                                          child: SizedBox(
+                                            width: qrScanSize,
+                                            height: qrScanSize,
+                                          ),
+                                        ),
+                                      )),
 
                     Positioned(
                       top: (constraints.maxHeight - qrScanSize) * (1 / 2) +
