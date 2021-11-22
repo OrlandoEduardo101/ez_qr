@@ -37,7 +37,7 @@ class QrcodeReaderView extends StatefulWidget {
     this.screenCamSize,
     this.positionCam,
     this.closePositionButton,
-    this.bottomContent, 
+    this.bottomContent,
     this.onClose,
   }) : super(key: key);
 
@@ -177,13 +177,12 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                   );
                 }
                 return Stack(
+                  alignment: Alignment.center,
                   children: <Widget>[
                     //ImagePreview
                     Positioned(
-                      left: widget.positionCam?.width ??
-                          (constraints.maxWidth - qrScanSize) / 2,
-                      top: widget.positionCam?.height ??
-                          (constraints.maxHeight - qrScanSize) / 2,
+                      left: widget.positionCam?.width,
+                      top: widget.positionCam?.height,
                       child: SizedBox(
                         width: widget.screenCamSize?.width ??
                             constraints.maxWidth * 0.84,
@@ -201,8 +200,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                     //
                     widget.scanWidget ??
                         Positioned(
-                          left: (constraints.maxWidth - qrScanSize) / 2,
-                          top: (constraints.maxHeight - qrScanSize) / 2,
+                          // left: (constraints.maxWidth - qrScanSize) / 2,
+                          // top: (constraints.maxHeight - qrScanSize) / 2,
                           child: CustomPaint(
                             painter: QrScanBoxPainter(
                               boxLineColor: widget.boxLineColor ?? Colors.red,
@@ -232,7 +231,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                       left: widget.closePositionButton?.width ??
                           MediaQuery.of(context).size.width * .085,
                       child: InkWell(
-                        onTap:  widget.onClose ?? () => Navigator.of(context).pop(),
+                        onTap:
+                            widget.onClose ?? () => Navigator.of(context).pop(),
                         child: Icon(
                           Icons.close,
                           color: const Color(0xff969696),
