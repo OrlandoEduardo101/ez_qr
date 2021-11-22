@@ -12,6 +12,7 @@ import 'qrcode_reader_controller.dart';
 /// Relevant privileges must be obtained before use
 class QrcodeReaderView extends StatefulWidget {
   final Future Function(String) onScan;
+  final Future Function()? onClose;
   final ReaderFrom readerFrom;
   final Widget? headerWidget;
   final double? scanBoxRatio;
@@ -36,7 +37,8 @@ class QrcodeReaderView extends StatefulWidget {
     this.screenCamSize,
     this.positionCam,
     this.closePositionButton,
-    this.bottomContent,
+    this.bottomContent, 
+    this.onClose,
   }) : super(key: key);
 
   @override
@@ -230,7 +232,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                       left: widget.closePositionButton?.width ??
                           MediaQuery.of(context).size.width * .085,
                       child: InkWell(
-                        onTap: () => Navigator.of(context).pop(),
+                        onTap:  widget.onClose ?? () => Navigator.of(context).pop(),
                         child: Icon(
                           Icons.close,
                           color: const Color(0xff969696),

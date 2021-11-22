@@ -9,6 +9,7 @@ class ScanView extends StatefulWidget {
   final Widget? scanWidget;
   final Size? screenCamSize;
   final Size? positionCam;
+  final Future Function()? onClose;
   final Function(String)? afterScan;
   final Widget? bottomContent;
   final ReaderFrom readerFrom;
@@ -21,7 +22,8 @@ class ScanView extends StatefulWidget {
     this.positionCam,
     this.afterScan,
     this.bottomContent,
-    required this.readerFrom,
+    required this.readerFrom, 
+    this.onClose,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class _ScanViewState extends State<ScanView> {
     return Scaffold(
       body: QrcodeReaderView(
         readerFrom: widget.readerFrom,
+        onClose: widget.onClose,
         key: _key,
         onScan: onScan,
         // headerWidget: AppBar(
