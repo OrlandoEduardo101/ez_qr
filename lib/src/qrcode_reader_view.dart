@@ -181,19 +181,36 @@ class QrcodeReaderViewState extends State<QrcodeReaderView> {
                   children: <Widget>[
                     //ImagePreview
                     Positioned(
-                      left: widget.positionCam?.width,
-                      top: widget.positionCam?.height,
-                      child: SizedBox(
-                        width: widget.screenCamSize?.width ??
-                            constraints.maxWidth * 0.84,
-                        height: widget.screenCamSize?.height ??
-                            constraints.maxWidth * 0.84,
-                        child: QrReaderView(
-                          width: constraints.maxWidth,
-                          height: constraints.maxHeight,
-                          callback: _onCreateController,
-                        ),
-                      ),
+                      // left: widget.positionCam?.width,
+                      // top: widget.positionCam?.height,
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: constraints.maxWidth * 0.05,
+                              vertical: constraints.maxWidth * 0.05),
+                          width: widget.screenCamSize?.width ??
+                              constraints.maxWidth * 0.84,
+                          height: widget.screenCamSize?.height ??
+                              constraints.maxHeight * 0.84,
+                          child: Center(
+                            child: Transform.scale(
+                              scale: 1.0,
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: OverflowBox(
+                                  alignment: Alignment.center,
+                                  child: QrReaderView(
+                                    width: constraints.maxWidth * 0.9,
+                                    height: constraints.maxWidth * 0.9,
+                                    callback: _onCreateController,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )),
                     ),
                     widget.headerWidget ?? SizedBox(),
                     //Mask Position
